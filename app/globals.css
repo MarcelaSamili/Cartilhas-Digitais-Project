@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+
+/*Isso ajuda a evitar bugs no mobile*/
+html, body {
+  height: calc(100dvh - env(safe-area-inset-bottom));
+  overflow-x: hidden;
+}
+/* Define a largura da barra de rolagem */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Estiliza o fundo da barra de rolagem */
+::-webkit-scrollbar-track {
+  background: #464E52; 
+}
+
+/* Estiliza o indicador (o "thumb") da barra de rolagem */
+::-webkit-scrollbar-thumb {
+  background: #6d6d6d; 
+  border-radius: 5px;
+}
+
+/* Quando o usuário passa o mouse sobre a barra */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+button, a {
+  outline: none;
+  touch-action: manipulation; /* Evita recarregamentos acidentais */
+}
+
+
+.font-comic{
+  font-family: 'comic-neue', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'comic-neue';
+  src: url('/public/font/Comic_Neue/ComicNeue-Italic.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+@layer utilities { 
+  .container {
+    width: 100%;
+    
+  }
+  @media (min-width: 640px) {
+    .container {
+      max-width: 640px;
+    }
+  }
+  @media (min-width: 768px) {
+    .container {
+      max-width: 768px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 1024px;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 1280px;
+    }
+  }
+  @media (min-width: 1536px) {
+    .container {
+      max-width: 1536px;
+    }
+  }
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .container {
+    max-width: 77.5rem /* 1240px */;
+  }
+  .container {
+    padding-left: 1.25rem /* 20px */;
+    padding-right: 1.25rem /* 20px */;
+  }
+  @media (min-width: 768px) {
+    .container {
+      padding-left: 2.5rem /* 40px */;
+      padding-right: 2.5rem /* 40px */;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 3.75rem /* 60px */;
+      padding-right: 3.75rem /* 60px */;
+    }
+  }
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 87.5rem /* 1400px */;
+    }
+  }  
+    
+};
+
+
+@layer components {
+  
+  .navigation {
+    display:none;
+  }
+  
+  
+  @media (min-width: 1024px ) {
+      .navigation {
+        display: block;
+      }
+  }
+  @media (min-width: 1280px ) {
+    .navigation {
+      display: block;
+    }
+  }
+}

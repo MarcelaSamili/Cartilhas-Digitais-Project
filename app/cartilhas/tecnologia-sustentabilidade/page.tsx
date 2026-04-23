@@ -50,11 +50,11 @@ const Page = () => {
 
         {/* SEÇÃO 2 */}
         <section className="min-w-full h-screen bg-[#3C9478] flex items-center justify-center p-4">
-          <div className="bg-cyan-800 text-white p-4 rounded-2xl text-sm md:text-lg">
-            <p>O que é Tecnologia Sustentável ?</p>
-            <p>Impactos da Tecnologia</p>
-            <p>Soluções Sustentáveis</p>
-            <p>O que você pode fazer?</p>
+          <div className="bg-cyan-800 text-white p-10 md:p-40 rounded-2xl leading-10 text-sm md:text-lg md:leading-20">
+            <p>O que é Tecnologia Sustentável--01</p>
+            <p>Impactos da Tecnologia ----------02</p>
+            <p>Soluções Sustentáveis ------------03</p>
+            <p>O que você pode fazer? ----------04</p>
           </div>
         </section>
 

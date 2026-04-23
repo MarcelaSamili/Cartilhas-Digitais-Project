@@ -85,8 +85,8 @@ export const sectionstext = [
       'Esse conceito envolve desde a criação de dispositivos mais eficientes até o uso de energias limpas, contribuindo para um futuro mais sustentável sem abrir mão do avanço tecnológico.',
     src1: '/icons1cartil/icon3.png',
     src2: '/icons1cartil/icon3.2.png',
-    className1: '"absolute left-5 bottom-10',
-    className2: 'absolute right-20 top-10',
+    className1: 'absolute right-10 top-10',
+    className2: 'absolute left-5 bottom-5',
   },
   {
     id: 2,
@@ -97,8 +97,8 @@ export const sectionstext = [
       'Principais Impactos Positivos da Tecnologia no Meio Ambiente:Energia Limpa e Eficiência, Agricultura de Precisão, Monitoramento Ambiental, Sustentabilidade Digital,Economia Circular e Gestão de Resíduos e Redução da Pegada de Carbono. ',
     src1: '/icons1cartil/iconn5.png',
     src2: '/icons1cartil/icon6.2.png',
-    className1: '"absolute left-10 bottom-5',
-    className2: 'absolute right-20 top-10',
+    className1: 'absolute right-10 top-10',
+    className2: 'absolute left-5 bottom-5',
   },
   {
     id: 3,
@@ -109,8 +109,8 @@ export const sectionstext = [
       'Outra prática importante é a reciclagem de eletrônicos, que permite reaproveitar materiais e diminuir a extração de recursos naturais. Além disso, o incentivo ao consumo consciente — comprando apenas o necessário e optando por produtos duráveis — é fundamental para reduzir o desperdício. Empresas também têm investido em tecnologias mais eficientes e processos produtivos menos agressivos ao meio ambiente.',
     src1: '/icons1cartil/icon4.png',
     src2: '/icons1cartil/icon4.2.png',
-    className1: 'absolute right-20 top-10',
-    className2: 'absolute left-5 bottom-10',
+    className1: 'absolute right-10 top-10',
+    className2: 'absolute left-5 bottom-5',
   },
   {
     id: 4,
@@ -121,8 +121,8 @@ export const sectionstext = [
       'Também é importante descartar corretamente resíduos eletrônicos em locais apropriados para reciclagem. Evitar compras desnecessárias e priorizar produtos de empresas comprometidas com a sustentabilidade faz toda a diferença. Além disso, compartilhar conhecimento e conscientizar outras pessoas amplia ainda mais o impacto positivo dessas ações.',
     src1: '/icons1cartil/iconn5.png',
     src2: '/icons1cartil/icon5.2.png',
-    className1: 'absolute right-20 top-10',
-    className2: 'absolute left-5 bottom-10',
+    className1: 'absolute right-10 top-10',
+    className2: 'absolute left-5 bottom-5',
   },
   {
     id: 5,
@@ -133,7 +133,7 @@ export const sectionstext = [
       'O futuro depende das escolhas que fazemos hoje. Pequenas mudanças de hábito, quando somadas, têm o poder de transformar o mundo em um lugar mais saudável e sustentável para todos.',
     src1: '/icons1cartil/icon6.png',
     src2: '/icons1cartil/icon6.2.png',
-    className1: 'absolute left-5 bottom-10',
-    className2: 'absolute right-20 top-10',
+    className1: 'absolute left-5 bottom-5',
+    className2: 'absolute right-10 top-10',
   },
 ];

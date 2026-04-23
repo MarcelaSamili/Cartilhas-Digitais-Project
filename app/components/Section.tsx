@@ -31,15 +31,15 @@ const Sectiontest = ({
       <Image
         src={src1}
         alt="icon-carga"
-        width={300}
-        height={300}
+        width={200}
+        height={200}
         className={className1}
       />
       <Image
         src={src2}
         alt="icon-carga"
-        width={300}
-        height={300}
+        width={200}
+        height={200}
         className={className2}
       />
     </section>

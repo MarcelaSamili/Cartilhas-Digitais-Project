@@ -86,7 +86,7 @@ export const sectionstext = [
     src1: '/icons1cartil/icon3.png',
     src2: '/icons1cartil/icon3.2.png',
     className1: 'absolute right-10 top-10',
-    className2: 'absolute left-5 bottom-5',
+    className2: 'absolute left-5 bottom-0',
   },
   {
     id: 2,
@@ -98,7 +98,7 @@ export const sectionstext = [
     src1: '/icons1cartil/iconn5.png',
     src2: '/icons1cartil/icon6.2.png',
     className1: 'absolute right-10 top-10',
-    className2: 'absolute left-5 bottom-5',
+    className2: 'absolute left-5 bottom-0',
   },
   {
     id: 3,
@@ -110,7 +110,7 @@ export const sectionstext = [
     src1: '/icons1cartil/icon4.png',
     src2: '/icons1cartil/icon4.2.png',
     className1: 'absolute right-10 top-10',
-    className2: 'absolute left-5 bottom-5',
+    className2: 'absolute left-5 bottom-0',
   },
   {
     id: 4,
@@ -122,7 +122,7 @@ export const sectionstext = [
     src1: '/icons1cartil/iconn5.png',
     src2: '/icons1cartil/icon5.2.png',
     className1: 'absolute right-10 top-10',
-    className2: 'absolute left-5 bottom-5',
+    className2: 'absolute left-5 bottom-0',
   },
   {
     id: 5,
@@ -133,7 +133,7 @@ export const sectionstext = [
       'O futuro depende das escolhas que fazemos hoje. Pequenas mudanças de hábito, quando somadas, têm o poder de transformar o mundo em um lugar mais saudável e sustentável para todos.',
     src1: '/icons1cartil/icon6.png',
     src2: '/icons1cartil/icon6.2.png',
-    className1: 'absolute left-5 bottom-5',
+    className1: 'absolute left-5 bottom-0',
     className2: 'absolute right-10 top-10',
   },
 ];

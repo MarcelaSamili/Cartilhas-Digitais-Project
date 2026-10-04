@@ -13,6 +13,7 @@ import {
 
 import { Produtividadecard, CriacaoeRevisao } from './produtividadecard';
 import { verificacoes } from '@/utils';
+import Botao_home from './Botao_home';
 
 interface PageProps {
   number: number;
@@ -91,6 +92,7 @@ export default function Booklet() {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-slate-900 py-4 px-2 sm:px-6 font-sans text-slate-800">
+      <Botao_home />
       {/* Barra Superior / Header */}
       <div className="w-full max-w-4xl flex justify-between items-center mb-4 px-2 text-white">
         <div className="flex items-center space-x-2">

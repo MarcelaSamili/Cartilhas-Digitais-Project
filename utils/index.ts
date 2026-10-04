@@ -137,3 +137,84 @@ export const sectionstext = [
     className2: 'absolute right-10 top-10',
   },
 ];
+
+type cardcontent_cartil2 = {
+  id: number;
+  title: string;
+  text: string;
+  span: string;
+};
+
+export const cardcontent_cartil2 = [
+  {
+    id: 1,
+    title: '1. Escrever uma Mensagem',
+    text: '"Escreva uma mensagem educada pedindo informações sobre um curso. Quero saber horário, valor e inscrição. Até 80 palavras."',
+    span: 'Confira: Exprime o que você deseja? Adapte o tom à sua forma natural de falar e confirme dados.',
+  },
+  {
+    id: 2,
+    title: '2. Estudar sem Deixar de Aprender',
+    text: '"Explique o ciclo da água em linguagem simples. Depois, crie três perguntas. Espere minhas respostas antes de corrigir."',
+    span: 'Confira: Compare com o livro didático. Responda sozinho para fixar e siga as regras da sua escola.',
+  },
+  {
+    id: 3,
+    title: '3. Organizar Pequeno Negócio',
+    text: '"Com base nesta lista fictícia de tarefas, monte uma tabela de atendimento com prioridades. Não invente horários."',
+    span: 'Confira: O plano cabe na sua rotina? Preços, prazos e estoques devem vir de registros reais.',
+  },
+  {
+    id: 4,
+    title: '4. Resumir um Texto com Cuidado',
+    text: '"Resuma o texto abaixo em 5 tópicos. Use apenas o conteúdo fornecido. Preserve datas, condições e avisos."',
+    span: 'Confira: Leia o original e certifique-se de que nenhum aviso importante foi omitido.',
+  },
+];
+type criacaoerevisao = {
+  id: number;
+  title: string;
+  text: string;
+  span: string;
+};
+export const criacaoerevisao = [
+  {
+    id: 1,
+    title: ' Gerar uma Imagem Sintética',
+    text: 'Exemplo: "Crie uma ilustração simples de uma biblioteca comunitária, com pessoas de diferentes idades lendo. Use cores suaves, sem logotipos e sem texto escrito."',
+    span: 'Análise Crítica: Observe mãos, rostos e possíveis estereótipos. Textos dentro de imagens costumam sair errados; prefira adicionar textos usando editores gráficos.',
+  },
+  {
+    id: 2,
+    title: 'Transcrever e Organizar Áudios',
+    text: 'Prompt: "Transcreva este áudio. Indique os trechos que não conseguir entender e não complete falas por suposição. Depois, liste assuntos e tarefas citadas."',
+    span: 'Antes: Peça autorização de quem fala e evite áudios com segredos ou dados pessoais. Depois: Ouça novamente e confira nomes próprios, valores e números. Sotaques e ruídos causam erros de interpretação.',
+  },
+];
+type verificacoes = {
+  id: number;
+  title: string;
+  text: string;
+};
+export const verificacoes = [
+  {
+    id: 1,
+    title: '1. Origem',
+    text: 'Existe uma fonte original identificável, confiável e reconhecida sobre o assunto?',
+  },
+  {
+    id: 2,
+    title: '2. Conteúdo',
+    text: 'Ao abrir os links e documentos originais, eles realmente confirmam o que a IA afirmou?',
+  },
+  {
+    id: 3,
+    title: '3. Data',
+    text: 'A informação continua válida e atualizada no contexto presente?',
+  },
+  {
+    id: 4,
+    title: '4. Comparação',
+    text: 'Outras fontes independentes de prestígio atestam o mesmo ponto principal?',
+  },
+];

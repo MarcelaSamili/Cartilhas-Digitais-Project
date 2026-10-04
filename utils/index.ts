@@ -22,7 +22,7 @@ export const gridItems = [
   {
     id: 2,
     title: 'Segundo Semestre',
-    href: '/cartilhas/emconstrucao',
+    href: '/cartilhas/ia-publicogeral',
     className: 'bg-[#D8B08C] col-span-3 row-span-1 lg:col-span-1 lg:row-span-2',
     url: "url('')",
   },

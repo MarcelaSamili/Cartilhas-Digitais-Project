@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import {
   ChevronLeft,
@@ -11,23 +11,22 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 
-// Tipagem das propriedades das páginas
 interface PageProps {
   number: number;
   children: React.ReactNode;
 }
 
-// Wrapper individual de cada página física
+// Componente Wrapper para cada Página
 const Page = React.forwardRef<HTMLDivElement, PageProps>(
   ({ number, children }, ref) => {
     return (
       <div
         ref={ref}
-        className="bg-slate-50 border border-slate-200 shadow-inner p-6 sm:p-8 flex flex-col justify-between h-full select-none overflow-y-auto"
+        className="bg-slate-50 border border-slate-200 shadow-inner p-5 sm:p-8 flex flex-col justify-between h-full select-none overflow-y-auto"
       >
-        <div className="flex-1">{children}</div>
-        <div className="pt-4 mt-auto border-t border-slate-200 flex justify-between items-center text-xs text-slate-400 font-sans">
-          <span>IA no Cotidiano — Cartilha Educativa</span>
+        <div className="flex-1 space-y-3">{children}</div>
+        <div className="pt-3 mt-auto border-t border-slate-200 flex justify-between items-center text-[10px] sm:text-xs text-slate-400 font-sans">
+          <span>IA no Cotidiano</span>
           <span>Pág. {number}</span>
         </div>
       </div>
@@ -40,6 +39,34 @@ Page.displayName = 'Page';
 export default function Booklet() {
   const bookRef = useRef<any>(null);
   const [currentPage, setCurrentPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [bookDimensions, setBookDimensions] = useState({
+    width: 380,
+    height: 550,
+  });
+
+  // Detecta alteração de tamanho de tela para responsividade
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+
+      if (mobile) {
+        // Cálculo de dimensão para mobile (1 página ocupando quase a largura da tela)
+        const width = Math.min(window.innerWidth - 32, 380);
+        const height = Math.min(window.innerHeight - 180, 580);
+        setBookDimensions({ width, height });
+      } else {
+        // Dimensão para Desktop (Duas páginas lado a lado)
+        setBookDimensions({ width: 420, height: 580 });
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const nextPage = () => {
     bookRef.current?.pageFlip()?.flipNext();
@@ -53,235 +80,204 @@ export default function Booklet() {
     setCurrentPage(e.data);
   };
 
+  const onInit = () => {
+    if (bookRef.current) {
+      setTotalPages(bookRef.current.pageFlip()?.getPageCount() || 0);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-900 py-8 px-4 font-sans text-slate-800">
-      {/* Controles do Topo / Barra de Ferramentas */}
-      <div className="w-full max-w-4xl flex justify-between items-center mb-6 px-4 text-white">
+    <div className="flex flex-col items-center justify-between min-h-screen bg-slate-900 py-4 px-2 sm:px-6 font-sans text-slate-800">
+      {/* Barra Superior / Header */}
+      <div className="w-full max-w-4xl flex justify-between items-center mb-4 px-2 text-white">
         <div className="flex items-center space-x-2">
-          <BookOpen className="w-6 h-6 text-indigo-400" />
-          <h1 className="text-xl font-bold hidden sm:block">
-            Cartilha Digital de IA no Cotidiano
+          <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400" />
+          <h1 className="text-base sm:text-xl font-bold">
+            Cartilha Digital IA
           </h1>
         </div>
 
-        {/* Navegação */}
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={prevPage}
-            className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition disabled:opacity-50"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <span className="text-sm font-medium text-slate-300">
-            Página {currentPage + 1}
-          </span>
-          <button
-            onClick={nextPage}
-            className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
+        {/* Contador de Páginas */}
+        <span className="text-xs sm:text-sm font-medium text-slate-300 bg-slate-800 px-3 py-1 rounded-full">
+          {currentPage + 1} / {totalPages || 6}
+        </span>
       </div>
 
-      {/* O Livro / Cartilha com Flip 3D */}
-      {/* @ts-ignore */}
-      <HTMLFlipBook
-        width={420}
-        height={580}
-        size="fixed"
-        minWidth={300}
-        maxWidth={500}
-        minHeight={400}
-        maxHeight={700}
-        showCover={true}
-        className="shadow-2xl rounded-lg overflow-hidden"
-        ref={bookRef}
-        onFlip={onPage}
-      >
-        {/* Capa Frontal */}
-        <div className="bg-linear-to-br from-indigo-600 via-indigo-700 to-slate-900 text-white p-8 flex flex-col justify-between h-full border-r border-indigo-500">
-          <div className="space-y-4">
-            <span className="inline-block bg-indigo-500/30 text-indigo-200 text-xs font-semibold px-3 py-1 rounded-full border border-indigo-400/20">
-              GUIA PRÁTICO
-            </span>
-            <h1 className="text-3xl font-extrabold tracking-tight leading-tight">
-              Uso de Ferramentas de Inteligência Artificial
-            </h1>
-            <p className="text-indigo-200 text-sm">
-              Aprenda a usar IA no cotidiano com autonomia, senso crítico e
-              segurança.
-            </p>
-          </div>
-
-          <div className="space-y-4">
-            <div className="p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/10">
-              <p className="text-xs text-indigo-100">
-                <strong>Para quem é:</strong> Estudantes, pequenos
-                empreendedores, pessoas em busca de emprego e público em geral.
+      {/* ÁREA DO LIVRO / FLIPBOOK */}
+      <div className="flex-1 flex items-center justify-center w-full my-auto overflow-hidden">
+        {/* @ts-ignore */}
+        <HTMLFlipBook
+          key={isMobile ? 'mobile' : 'desktop'} // Re-renderiza o componente ao mudar de dispositivo
+          width={bookDimensions.width}
+          height={bookDimensions.height}
+          size="fixed"
+          minWidth={280}
+          maxWidth={450}
+          minHeight={400}
+          maxHeight={700}
+          showCover={true}
+          usePortrait={isMobile} // Ativa modo retrato (1 página por vez no mobile)
+          startPage={0}
+          drawShadow={true}
+          className="shadow-2xl rounded-lg overflow-hidden"
+          ref={bookRef}
+          onFlip={onPage}
+          onInit={onInit}
+        >
+          {/* Capa */}
+          <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-slate-900 text-white p-6 sm:p-8 flex flex-col justify-between h-full border-r border-indigo-500 select-none">
+            <div className="space-y-3 sm:space-y-4">
+              <span className="inline-block bg-indigo-500/30 text-indigo-200 text-[10px] sm:text-xs font-semibold px-2.5 py-1 rounded-full border border-indigo-400/20">
+                GUIA PRÁTICO
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+                Uso de Ferramentas de IA
+              </h1>
+              <p className="text-indigo-200 text-xs sm:text-sm">
+                Aprenda a usar IA no cotidiano com autonomia, senso crítico e
+                segurança.
               </p>
             </div>
-            <p className="text-xs text-indigo-300">
-              Clique na ponta da folha para virar →
-            </p>
-          </div>
-        </div>
 
-        {/* Página 1: Conceitos */}
-        <Page number={1}>
-          <h2 className="text-xl font-bold text-indigo-900 mb-3">
-            01. Entenda a IA antes de usar
-          </h2>
-          <p className="text-xs text-slate-600 mb-4 leading-relaxed">
-            A IA generativa cria textos e imagens com base em cálculos de
-            probabilidade. Ela não possui consciência nem sentimentos.
-          </p>
-
-          <div className="bg-amber-50 border-l-4 border-amber-500 p-3 mb-4 rounded-r-lg">
-            <div className="flex items-start space-x-2">
-              <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-              <div>
-                <h4 className="font-bold text-xs text-amber-800">
-                  Cuidado com Alucinações
-                </h4>
-                <p className="text-[11px] text-amber-700">
-                  Uma resposta fluente e convincente pode conter dados
-                  totalmente inventados.
-                </p>
+            <div className="space-y-3">
+              <div className="p-3 bg-white/10 rounded-xl backdrop-blur-sm border border-white/10 text-xs">
+                <strong>Para quem é:</strong> Estudantes, pequenos
+                empreendedores e público em geral.
               </div>
+              <p className="text-[10px] sm:text-xs text-indigo-300 text-center">
+                Deslize ou toque para folhear →
+              </p>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <h3 className="text-xs font-bold text-slate-800">
-              O que ela pode fazer:
-            </h3>
-            <ul className="text-xs text-slate-600 space-y-1 pl-4 list-disc">
-              <li>Criar rascunhos e estruturar ideias</li>
-              <li>Explicar conceitos difíceis em linguagem simples</li>
-              <li>Resumir grandes volumes de texto</li>
+          {/* Página 1 */}
+          <Page number={1}>
+            <h2 className="text-lg sm:text-xl font-bold text-indigo-900">
+              01. O que é IA Generativa
+            </h2>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              A IA generativa cria conteúdos (textos, imagens) com base em
+              padrões de dados. Ela calcula probabilidades, mas não possui
+              inteligência real.
+            </p>
+
+            <div className="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg">
+              <div className="flex items-start space-x-2">
+                <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-bold text-xs text-amber-800">
+                    Atenção às Alucinações
+                  </h4>
+                  <p className="text-[11px] text-amber-700">
+                    A IA pode inventar dados e citações com tom de certeza.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Page>
+
+          {/* Página 2 */}
+          <Page number={2}>
+            <h2 className="text-lg sm:text-xl font-bold text-indigo-900">
+              02. Como fazer um Prompt
+            </h2>
+            <p className="text-xs text-slate-600">
+              Um prompt é o comando enviado à IA. Seja específico sobre a tarefa
+              e contexto.
+            </p>
+
+            <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-[11px] space-y-1">
+              <span className="text-emerald-400 font-bold">
+                // Exemplo de Prompt
+              </span>
+              <p>
+                "Quero [TAREFA]. O contexto é [SITUAÇÃO]. Responda em [FORMATO]
+                sem inventar dados."
+              </p>
+            </div>
+          </Page>
+
+          {/* Página 3 */}
+          <Page number={3}>
+            <h2 className="text-lg sm:text-xl font-bold text-indigo-900">
+              03. Privacidade
+            </h2>
+            <div className="flex items-center space-x-2 text-rose-600 mb-2">
+              <ShieldAlert className="w-4 h-4" />
+              <span className="font-bold text-xs">Nunca compartilhe:</span>
+            </div>
+
+            <ul className="text-xs text-slate-700 space-y-1.5">
+              <li className="bg-rose-50 p-2 rounded border border-rose-100">
+                🚫 Senhas e dados bancários
+              </li>
+              <li className="bg-rose-50 p-2 rounded border border-rose-100">
+                🚫 Documentos pessoais (CPF/RG)
+              </li>
+              <li className="bg-rose-50 p-2 rounded border border-rose-100">
+                🚫 Prontuários e exames de saúde
+              </li>
             </ul>
-          </div>
-        </Page>
+          </Page>
 
-        {/* Página 2: Prompts */}
-        <Page number={2}>
-          <h2 className="text-xl font-bold text-indigo-900 mb-3">
-            02. Como fazer um bom pedido
-          </h2>
-          <p className="text-xs text-slate-600 mb-4">
-            O pedido feito à IA é chamado de <strong>Prompt</strong>. Quanto
-            mais contexto e clareza você fornecer, melhor será a resposta.
-          </p>
-
-          <div className="bg-slate-900 text-slate-100 p-3 rounded-lg font-mono text-[11px] space-y-2 mb-4">
-            <span className="text-emerald-400 font-bold">
-              // Fórmulas de Prompt
-            </span>
-            <p>
-              "Quero [TAREFA]. O contexto é [SITUAÇÃO]. O público é [QUEM LEIA].
-              Responda em [FORMATO] sem inventar dados."
+          {/* Página 4 */}
+          <Page number={4}>
+            <h2 className="text-lg sm:text-xl font-bold text-indigo-900">
+              04. Checklist
+            </h2>
+            <p className="text-xs text-slate-600">
+              Antes de publicar ou enviar:
             </p>
+
+            <div className="space-y-2 text-xs">
+              <label className="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200">
+                <input type="checkbox" className="rounded text-indigo-600" />
+                <span>Verifiquei fontes oficiais?</span>
+              </label>
+              <label className="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200">
+                <input type="checkbox" className="rounded text-indigo-600" />
+                <span>Removi dados pessoais?</span>
+              </label>
+              <label className="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200">
+                <input type="checkbox" className="rounded text-indigo-600" />
+                <span>Revisei o resultado final?</span>
+              </label>
+            </div>
+          </Page>
+
+          {/* Contracapa */}
+          <div className="bg-slate-900 text-white p-6 sm:p-8 flex flex-col justify-between h-full border-l border-slate-800 select-none">
+            <div className="text-center space-y-3 my-auto">
+              <CheckCircle className="w-10 h-10 text-emerald-400 mx-auto" />
+              <h3 className="text-base font-bold">Uso Responsável</h3>
+              <p className="text-xs text-slate-400">
+                A responsabilidade pelo conteúdo final é sempre humana.
+              </p>
+            </div>
           </div>
+        </HTMLFlipBook>
+      </div>
 
-          <div className="border border-indigo-100 bg-indigo-50/50 p-3 rounded-lg">
-            <h4 className="font-bold text-xs text-indigo-900 mb-1">
-              Dica de Ouro:
-            </h4>
-            <p className="text-[11px] text-indigo-700">
-              Se o resultado não for ideal, peça ajustes: <em>"Simplifique"</em>
-              , <em>"Dê um exemplo prático"</em> ou{' '}
-              <em>"Refaça em formato de lista"</em>.
-            </p>
-          </div>
-        </Page>
+      {/* Controles do Rodapé / Navegação Touch Amigável */}
+      <div className="w-full max-w-xs flex justify-between items-center mt-4">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 0}
+          className="flex items-center space-x-1 px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          <span>Anterior</span>
+        </button>
 
-        {/* Página 3: Privacidade */}
-        <Page number={3}>
-          <h2 className="text-xl font-bold text-indigo-900 mb-3">
-            03. Proteção e Segurança
-          </h2>
-          <div className="flex items-center space-x-2 text-rose-600 mb-3">
-            <ShieldAlert className="w-5 h-5" />
-            <span className="font-bold text-xs">
-              Nunca compartilhe com a IA:
-            </span>
-          </div>
-
-          <ul className="text-xs text-slate-700 space-y-2 mb-4">
-            <li className="flex items-center space-x-2 bg-rose-50 p-2 rounded border border-rose-100">
-              <span>🚫 Senhas, dados bancários e senhas de acesso</span>
-            </li>
-            <li className="flex items-center space-x-2 bg-rose-50 p-2 rounded border border-rose-100">
-              <span>🚫 Documentos pessoais (CPF, RG, Certidões)</span>
-            </li>
-            <li className="flex items-center space-x-2 bg-rose-50 p-2 rounded border border-rose-100">
-              <span>🚫 Informações de saúde e prontuários médicos</span>
-            </li>
-          </ul>
-
-          <p className="text-[11px] text-slate-500 italic">
-            Substitua dados reais por dados fictícios antes de colar qualquer
-            texto em plataformas de IA públicas.
-          </p>
-        </Page>
-
-        {/* Página 4: Checklist Final */}
-        <Page number={4}>
-          <h2 className="text-xl font-bold text-indigo-900 mb-3">
-            04. Checklist de Verificação
-          </h2>
-          <p className="text-xs text-slate-600 mb-4">
-            Antes de compartilhar qualquer conteúdo gerado por IA:
-          </p>
-
-          <div className="space-y-2 text-xs">
-            <label className="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-              <input
-                type="checkbox"
-                className="rounded text-indigo-600 focus:ring-indigo-500"
-              />
-              <span>Conferi os fatos em fontes confiáveis?</span>
-            </label>
-            <label className="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-              <input
-                type="checkbox"
-                className="rounded text-indigo-600 focus:ring-indigo-500"
-              />
-              <span>Removi dados pessoais e sigilosos?</span>
-            </label>
-            <label className="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-              <input
-                type="checkbox"
-                className="rounded text-indigo-600 focus:ring-indigo-500"
-              />
-              <span>Verifiquei possíveis preconceitos/vieses?</span>
-            </label>
-            <label className="flex items-center space-x-2 p-2 bg-white rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
-              <input
-                type="checkbox"
-                className="rounded text-indigo-600 focus:ring-indigo-500"
-              />
-              <span>Revisei a coerência do texto final?</span>
-            </label>
-          </div>
-        </Page>
-
-        {/* Contra-Capa Posterior */}
-        <div className="bg-slate-900 text-white p-8 flex flex-col justify-between h-full border-l border-slate-800">
-          <div className="text-center space-y-4 my-auto">
-            <CheckCircle className="w-12 h-12 text-emerald-400 mx-auto" />
-            <h3 className="text-lg font-bold">Uso Responsável da IA</h3>
-            <p className="text-xs text-slate-400">
-              A decisão e a responsabilidade final pelo conteúdo continuam sendo
-              humanas.
-            </p>
-          </div>
-          <div className="text-center text-[10px] text-slate-500">
-            Material Educativo — 2026
-          </div>
-        </div>
-      </HTMLFlipBook>
+        <button
+          onClick={nextPage}
+          disabled={currentPage >= totalPages - 1}
+          className="flex items-center space-x-1 px-4 py-2 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition disabled:opacity-40 disabled:cursor-not-allowed"
+        >
+          <span>Próxima</span>
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
     </div>
   );
 }
